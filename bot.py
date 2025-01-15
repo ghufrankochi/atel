@@ -1,19 +1,11 @@
 from telegram import Update
-from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
-# بوټ جوړ کړئ
-async def start(update: Update, context):
-    await update.message.reply_text("سلام! زه ستاسو بوټ یم. څنګه درسره مرسته کولی شم؟")
-
-async def echo(update: Update, context):
-    await update.message.reply_text(f"تاسو وویل: {update.message.text}")
+async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text("سلام! زه ستا بوټ یم.")
 
 if __name__ == "__main__":
-    application = ApplicationBuilder().token("ستاسو_API_Token_دلته_واچوئ").build()
+    app = ApplicationBuilder().token("1095818301:AAEXh1vV3WsMf8Vxoy5aC6yslmIOGQ7_t_0").build()
+    app.add_handler(CommandHandler("start", start))
+    app.run_polling()
 
-    # د کمانډ او پیغامونو لپاره هندلرونه اضافه کړئ
-    application.add_handler(CommandHandler("start", start))
-    application.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, echo))
-
-    # بوټ چالان کړئ
-    application.run_polling()
